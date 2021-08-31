@@ -4,8 +4,12 @@ namespace App\Controller\admin;
 
 use DateTime;
 use App\Entity\User;
+use App\Entity\Intervenant;
 use App\Form\IntervenantType;
+use Symfony\Component\Mime\Address;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,11 +26,12 @@ class UserController extends AbstractController
     }
 
     #[Route('admin/user/register', name: 'admin_intervenant_register')]
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder,  MailerInterface $mailer): Response
     {
         $user = new User();
+        $intervenant = new Intervenant();
         $form = $this->createForm(IntervenantType::class, $user);
-        $form->handleRequest($request);
+        $contact = $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
         
@@ -42,7 +47,22 @@ class UserController extends AbstractController
                 )
                 );
             $user->setCreatedAt(new DateTime('NOW'));
-            dd($user);
+            $intervenant->setDailyrate($form->get('dailyRate')->getData());
+            $intervenant->setHalfDayRate($form->get('halfDayRate')->getData());
+            $intervenant->setCodeExam($form->get('codeExam')->getData());
+            $intervenant->setPerstudent($form->get('perStudent')->getData());
+            $user->setIntervenant($intervenant);
+            
+            if($form->get('sendEmail')->getData() == true){
+            $email = (new TemplatedEmail())
+            ->from(new Address('bastienpiperel@gmail.com', 'NoReplyPhiliance')) //addresse a remplacer par celle de philiance
+            ->to($user->getEmail())
+            ->subject('Vos identifiants Philiance sont désormais disponibles! ')
+            ->htmlTemplate('emails/registerIntervenant.html.twig')
+            ->context(['identifiant'=> $user->getEmail() , "motDePasse" => $plainpassword]);
+            $mailer->send($email);
+            $this->addFlash('message', "votre email a bien été envoyé");
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -55,13 +75,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    // $email = (new TemplatedEmail())
-    //         ->from($contact->get('email')->getData())
-    //         ->to($annonce->getUsers()->getEmail())
-    //         ->subject('contact au sujet de votre annonce')
-    //         ->htmlTemplate('emails/contact_annonce.html.twig')
-    //         ->context(['annonce'=> $annonce, "mail" => $contact->get('email')->getData(), 'message' => $contact->get('message')->getData()]);
-    //         $mailer->send($email);
-    //         $this->addFlash('message', "votre email a bien été envoyé");
+  
 
 }
