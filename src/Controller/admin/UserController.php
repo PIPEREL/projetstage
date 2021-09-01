@@ -6,6 +6,7 @@ use DateTime;
 use App\Entity\User;
 use App\Entity\Intervenant;
 use App\Form\IntervenantType;
+use App\Repository\IntervenantRepository;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,9 +49,11 @@ class UserController extends AbstractController
                 );
             $user->setCreatedAt(new DateTime('NOW'));
             $intervenant->setDailyrate($form->get('dailyRate')->getData());
-            $intervenant->setHalfDayRate($form->get('halfDayRate')->getData());
-            $intervenant->setCodeExam($form->get('codeExam')->getData());
-            $intervenant->setPerstudent($form->get('perStudent')->getData());
+            $intervenant->setHalfDayRate($form->get('halfDayRate')->getData()); 
+            if($form->get('perStudent')->getData() !== null){
+                $intervenant->setCodeExam($form->get('codeExam')->getData());
+                $intervenant->setPerstudent($form->get('perStudent')->getData());
+                }
             $user->setIntervenant($intervenant);
             
             if($form->get('sendEmail')->getData() == true){
@@ -75,6 +78,38 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('admin/user/edit/{id}', name: 'admin_intervenant_edit')]
+    public function editIntervenant(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
+    {
+       
+        $intervenant = $user->getIntervenant();
+        $form = $this->createForm(IntervenantType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+        
+            $intervenant->setDailyrate($form->get('dailyRate')->getData());
+            $intervenant->setHalfDayRate($form->get('halfDayRate')->getData());
+            if($form->get('perStudent')->getData() !== null){
+            $intervenant->setCodeExam($form->get('codeExam')->getData());
+            $intervenant->setPerstudent($form->get('perStudent')->getData());
+            }
+            
+        
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->persist($intervenant);
+            $entityManager->flush();
+            return $this->redirectToRoute('user_admin');
+        }
+
+        return $this->render('admin/user/editIntervenant.html.twig', [
+            'controller_name' => 'UserController',
+            'form' => $form->createView(),
+            'user' => $user
+        ]);
+    }
   
 
 }
