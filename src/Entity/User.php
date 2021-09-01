@@ -66,9 +66,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $address;
 
     /**
-     * @ORM\OneToOne(targetEntity=Intervenant::class, inversedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Intervenant::class, mappedBy="user", cascade={"persist", "remove"})
      */
     private $intervenant;
+
 
     public function getId(): ?int
     {
@@ -236,8 +237,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->intervenant;
     }
 
-    public function setIntervenant(?Intervenant $intervenant): self
+    public function setIntervenant(Intervenant $intervenant): self
     {
+        // set the owning side of the relation if necessary
+        if ($intervenant->getUser() !== $this) {
+            $intervenant->setUser($this);
+        }
+
         $this->intervenant = $intervenant;
 
         return $this;

@@ -27,10 +27,6 @@ class Intervenant
      */
     private $halfDayRate;
 
-    /**
-     * @ORM\OneToOne(targetEntity=User::class, mappedBy="intervenant", cascade={"persist", "remove"})
-     */
-    private $user;
 
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
@@ -41,6 +37,12 @@ class Intervenant
      * @ORM\Column(type="float", nullable=true)
      */
     private $perstudent;
+
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="intervenant", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function getId(): ?int
     {
@@ -71,27 +73,6 @@ class Intervenant
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($user === null && $this->user !== null) {
-            $this->user->setIntervenant(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($user !== null && $user->getIntervenant() !== $this) {
-            $user->setIntervenant($this);
-        }
-
-        $this->user = $user;
-
-        return $this;
-    }
 
     public function getCodeExam(): ?string
     {
@@ -113,6 +94,18 @@ class Intervenant
     public function setPerstudent(float $perstudent): self
     {
         $this->perstudent = $perstudent;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -78,28 +78,23 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('admin/user/edit/{id}', name: 'admin_intervenant_edit')]
-    public function editIntervenant(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
+    #[Route('admin/user/edit/{id}', name: 'admin_intervenant_edit', methods: ['GET', 'POST'])]
+    public function editIntervenant(Request $request, User $user, IntervenantRepository $intervenantRepository ,UserPasswordEncoderInterface $passwordEncoder): Response
     {
        
-        $intervenant = $user->getIntervenant();
+        $intervenant = $intervenantRepository->findOneBy(['user' => $user]);
         $form = $this->createForm(IntervenantType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-        
+        if ($form->isSubmitted() && $form->isValid()) {    
             $intervenant->setDailyrate($form->get('dailyRate')->getData());
             $intervenant->setHalfDayRate($form->get('halfDayRate')->getData());
-            if($form->get('perStudent')->getData() !== null){
             $intervenant->setCodeExam($form->get('codeExam')->getData());
             $intervenant->setPerstudent($form->get('perStudent')->getData());
-            }
             
         
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
-            $entityManager->persist($intervenant);
             $entityManager->flush();
             return $this->redirectToRoute('user_admin');
         }
