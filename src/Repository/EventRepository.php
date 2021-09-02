@@ -47,4 +47,16 @@ class EventRepository extends ServiceEntityRepository
         ;
     }
     */
+    
+    public function calendarExFo(){
+     return $this->createQueryBuilder('c')
+     ->JOIN('App:TypeEvent','t')
+     ->where('c.typeEvent = t.id')
+     ->andWhere("t.type != :val")
+     ->setParameter('val', "dispo")
+     ->getQuery()
+     ->getResult();
+    }
+
+    
 }

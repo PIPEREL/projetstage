@@ -1,20 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
+<link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css" integrity="sha256-FjyLCG3re1j4KofUTQQXmaWJw13Jdb7LQvXlkFxTDJI=" crossorigin="anonymous">
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+#calendar{
+    width:65%;
+    margin:auto;
+}
+
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/projet-stage/stage/src/Controller/AdminController.php'|file_link(0) }}">src/Controller/AdminController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/projet-stage/stage/templates/admin/index.html.twig'|file_link(0) }}">templates/admin/index.html.twig</a></code></li>
-    </ul>
+    <h1>Hello </h1>
+        <div id='calendar'></div>
 </div>
 {% endblock %}
+
+
+    {% block javascripts %}
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js" integrity="sha256-8nl2O4lMNahIAmUnxZprMxJIBiPv+SzhMuYwEuinVM0=" crossorigin="anonymous"></script>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth', // changer en timeGridWeek si le calendrier par défaut est en week
+          locale: 'fr',
+          timeZone:'Europe/Paris',
+          navLinks: true,
+          headerToolbar: {
+              start: 'prev,next today',
+              center: 'title',
+              end: 'dayGridMonth, timeGridWeek, timeGridDay'
+          },
+
+        events: {{ data|raw }},
+        editable: false,
+        eventResizableFromStart: false
+          
+        });
+       calendar.on('eventChange', (e) => {
+            let url = `./api/${e.event.id}/edit`
+            let donnees = {
+                "title": e.event.title,
+                "start": e.event.start,
+                "end": e.event.end,
+                "allDay": e.event.allDay
+            }
+            
+            let xhr = new XMLHttpRequest
+            xhr.open("PUT", url)
+            xhr.send(JSON.stringify(donnees))
+        })
+
+        calendar.render();
+        });
+        </script>
+    {% endblock %}
+ 
