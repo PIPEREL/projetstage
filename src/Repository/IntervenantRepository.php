@@ -47,4 +47,12 @@ class IntervenantRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findExaminateurs(){
+        return $this->createQueryBuilder('e')
+        ->andWhere('e.code_exam IS NOT NULL')
+        ->getQuery()
+        ->getResult()
+        ;
+    }
 }

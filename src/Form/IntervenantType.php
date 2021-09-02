@@ -30,9 +30,9 @@ class IntervenantType extends AbstractType
             ->add('phone', TextType::class, ['label' => "téléphone", 'attr'=>["placeholder"=> "numéro de téléphone"],'constraints' => [new Regex('#^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$#')]])
             ->add('dailyRate', NumberType::class, ['mapped' =>false, 'label' => "tarif", 'attr'=>["placeholder"=> "tarif journée complète"], 'attr' => ["min" => 0, "step" => 0.01]])
             ->add('halfDayRate', NumberType::class, ["mapped"=> false, 'label' => "tarif demi-journée", 'attr'=>["placeholder"=> "tarif demi-journée"],'attr' => ["min" => 0, "step" => 0.01]])
-            ->add('codeExam', TextType::class, ['mapped'=> false, 'label' => "code examinateur", 'attr'=>["placeholder"=> "code examinateur"]])
+            ->add('codeExam', TextType::class, ['required'=>false, 'mapped'=> false, 'label' => "code examinateur", 'attr'=>["placeholder"=> "code examinateur"]])
            
-            ->add('perStudent', NumberType::class, ['mapped' =>false, 'label' => "tarif par etudiant", 'attr'=>["placeholder"=> "tarif par etudiant"], 'attr' => ["min" => 0, "step" => 0.01]])
+            ->add('perStudent', NumberType::class, ['required'=>false, 'mapped' =>false, 'label' => "tarif par etudiant", 'attr'=>["placeholder"=> "tarif par etudiant"], 'attr' => ["min" => 0, "step" => 0.01]])
            
             ->add('sendEmail', CheckboxType::class, [ "mapped" =>false, 'attr' => array('checked'   => 'checked'), 'label' => 'envoyer email contenant le mdp?','required' => false,])
             ->add('Envoyer', SubmitType::class)

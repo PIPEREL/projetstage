@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\Intervenant;
 use App\Form\IntervenantType;
 use App\Repository\IntervenantRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +20,14 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
     #[Route('admin/user', name: 'user_admin')]
-    public function index(): Response
+    public function index(IntervenantRepository $intervenantRepository): Response
     {
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
+        $examinateurs = $intervenantRepository->findExaminateurs();
+        $formateurs = $intervenantRepository->findall();
+
+        return $this->render('admin/user/index.html.twig', [
+            'examinateurs' => $examinateurs,
+            'formateurs' => $formateurs
         ]);
     }
 
@@ -68,6 +73,7 @@ class UserController extends AbstractController
             }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+            // $entityManager->persist($intervenant);
             $entityManager->flush();
             return $this->redirectToRoute('user_admin');
         }
