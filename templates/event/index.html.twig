@@ -13,6 +13,7 @@
                 <th>End</th>
                 <th>Maxcandidate</th>
                 <th>All_day</th>
+                <th>intervenants </th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,6 +24,9 @@
                 <td>{{ event.start ? event.start|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ event.end ? event.end|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ event.maxcandidate }}</td>
+                <td>{{ event.typeEvent.title }}</td>
+               <td> {% if event.intervenant is null %} pas encore intervenant {% else %}{{ event.intervenant.user.name }}{% endif %}</td>
+            
                 <td>{{ event.allDay ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('event_show', {'id': event.id}) }}">show</a>
