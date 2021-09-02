@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EventController extends AbstractController
 {
-    #[Route('/event', name: 'event')]
+    #[Route('admin/event', name: 'event_admin')]
     public function index(): Response
     {
         return $this->render('event/index.html.twig', [

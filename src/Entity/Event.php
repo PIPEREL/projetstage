@@ -17,10 +17,7 @@ class Event
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $title;
+
 
     /**
      * @ORM\Column(type="datetime")
@@ -47,22 +44,17 @@ class Event
      */
     private $intervenant;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=TypeEvent::class, inversedBy="events")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $typeEvent;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
 
     public function getStart(): ?\DateTimeInterface
     {
@@ -120,6 +112,18 @@ class Event
     public function setIntervenant(?Intervenant $intervenant): self
     {
         $this->intervenant = $intervenant;
+
+        return $this;
+    }
+
+    public function getTypeEvent(): ?TypeEvent
+    {
+        return $this->typeEvent;
+    }
+
+    public function setTypeEvent(?TypeEvent $typeEvent): self
+    {
+        $this->typeEvent = $typeEvent;
 
         return $this;
     }
