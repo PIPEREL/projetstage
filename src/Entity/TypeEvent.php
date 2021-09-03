@@ -34,6 +34,21 @@ class TypeEvent
      */
     private $events;
 
+    /**
+     * @ORM\Column(type="string", length=7)
+     */
+    private $backgroundColor;
+
+    /**
+     * @ORM\Column(type="string", length=7)
+     */
+    private $borderColor;
+
+    /**
+     * @ORM\Column(type="string", length=7)
+     */
+    private $textColor;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -94,6 +109,42 @@ class TypeEvent
                 $event->setTypeEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBackgroundColor(): ?string
+    {
+        return $this->backgroundColor;
+    }
+
+    public function setBackgroundColor(string $backgroundColor): self
+    {
+        $this->backgroundColor = $backgroundColor;
+
+        return $this;
+    }
+
+    public function getBorderColor(): ?string
+    {
+        return $this->borderColor;
+    }
+
+    public function setBorderColor(string $borderColor): self
+    {
+        $this->borderColor = $borderColor;
+
+        return $this;
+    }
+
+    public function getTextColor(): ?string
+    {
+        return $this->textColor;
+    }
+
+    public function setTextColor(string $textColor): self
+    {
+        $this->textColor = $textColor;
 
         return $this;
     }

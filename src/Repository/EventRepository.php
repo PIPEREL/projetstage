@@ -58,5 +58,14 @@ class EventRepository extends ServiceEntityRepository
      ->getResult();
     }
 
+    public function calendarUser($intervenant){
+        return $this->createQueryBuilder('c')
+        ->where('c.intervenant = :val')
+        ->setParameter("val", $intervenant)
+        ->getQuery()
+        ->getResult();
+        ;
+    }
+
     
 }

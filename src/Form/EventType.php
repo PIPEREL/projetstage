@@ -3,8 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Event;
-use App\Entity\Intervenant;
 use App\Entity\TypeEvent;
+use App\Entity\Intervenant;
 use PhpParser\Node\Stmt\Label;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

@@ -50,7 +50,7 @@ class EventController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'event_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'event_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Event $event): Response
     {
         $form = $this->createForm(EventType::class, $event);

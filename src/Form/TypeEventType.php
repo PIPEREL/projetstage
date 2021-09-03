@@ -4,8 +4,10 @@ namespace App\Form;
 
 use App\Entity\TypeEvent;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 
 class TypeEventType extends AbstractType
 {
@@ -13,7 +15,10 @@ class TypeEventType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('type')
+            ->add('type', ChoiceType::class, ['label' => "type",'choices' =>['formation' => "formation", 'examens' => "examens", "dispo" => "dispo" ]])
+            ->add('backgroundColor', ColorType::class)
+            ->add('borderColor', ColorType::class)
+            ->add('textColor', ColorType::class)
         ;
     }
 
