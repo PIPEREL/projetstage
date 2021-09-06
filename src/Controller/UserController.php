@@ -62,7 +62,7 @@ class UserController extends AbstractController
     }
 }
 
-//SELECT * from event where intervenant_id = intervenant.id && $start_one <= $end_two && $end_one >= $start_two
+//SELECT * from event where intervenant_id = intervenant.id && $start_one <= $end_two && $end_one >= $start_two)
 
 //SELECT * From intervenant where id not in (select intervenant_id from event inner join intervenant where intervenant.id = event.intervenant_id)
 

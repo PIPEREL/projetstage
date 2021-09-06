@@ -20,7 +20,7 @@ class AdminController extends AbstractController
 
         $baseurl = $_SERVER['REDIRECT_BASE'];
 
-        $url= $protocol.'://' .$serverName. $baseurl.'/event/edit/';
+        $url= $protocol.'://' .$serverName. $baseurl.'/admin/event/setintervenant/';
 
         $events = $eventRepository->calendarExFo();
         $rdvs=[];

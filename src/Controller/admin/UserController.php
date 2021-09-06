@@ -22,7 +22,7 @@ class UserController extends AbstractController
     #[Route('admin/user', name: 'user_admin')]
     public function index(IntervenantRepository $intervenantRepository): Response
     {
-        $examinateurs = $intervenantRepository->findExaminateurs();
+        $examinateurs = $intervenantRepository->findExaminer();
         $formateurs = $intervenantRepository->findall();
 
         return $this->render('admin/user/index.html.twig', [

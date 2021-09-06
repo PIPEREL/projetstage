@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Form\EventType;
 use App\Repository\EventRepository;
+use App\Repository\IntervenantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,16 +63,19 @@ class EventController extends AbstractController
             return $this->redirectToRoute('event_index', [], Response::HTTP_SEE_OTHER);
         }
 
+
         return $this->renderForm('event/edit.html.twig', [
             'event' => $event,
             'form' => $form,
         ]);
     }
 
+
+
     #[Route('/{id}', name: 'event_delete', methods: ['POST'])]
     public function delete(Request $request, Event $event): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$event->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $event->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($event);
             $entityManager->flush();
@@ -79,4 +83,6 @@ class EventController extends AbstractController
 
         return $this->redirectToRoute('event_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }
+
