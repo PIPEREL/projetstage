@@ -42,5 +42,18 @@ class EventController extends AbstractController
         ]);
     }
 
+    
+    #[Route('/{id}', name: 'user_event_show', methods: ['GET'])]
+    public function show(Event $event): Response
+    {
+        if($event->getIntervenant() != $this->getUser()->getIntervenant())
+        {
+            return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('event/show.html.twig', [
+            'event' => $event,
+        ]);
+    }
 }
 

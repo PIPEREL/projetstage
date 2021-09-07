@@ -24,7 +24,7 @@ class UserController extends AbstractController
 
         $baseurl = $_SERVER['REDIRECT_BASE'];
 
-        $url= $protocol.'://' .$serverName. $baseurl.'/event/edit/';
+        $url= $protocol.'://' .$serverName. $baseurl.'/event/';
 
         $intervenant = $this->getUser()->getIntervenant();        
         $events = $eventRepository->calendarUser($intervenant);
@@ -48,7 +48,7 @@ class UserController extends AbstractController
                 'description' => $description,
                 'backgroundColor' => $background,
                 'borderColor' => $border,
-                // 'url' => $url.$event->getId(),
+                'url' => $url.$event->getId(),
                 'textColor' => $textcolor,
                 'allDay' => $event->getAllDay()       
             ];
