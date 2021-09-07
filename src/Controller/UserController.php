@@ -1,17 +1,21 @@
 <?php
 
-namespace App\Controller\admin;
+namespace App\Controller;
 
 use App\Repository\EventRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class AdminController extends AbstractController
+class UserController extends AbstractController
 {
-    #[Route('/admin', name: 'admin')]
+    #[Route('/user', name: 'user')]
     public function index(EventRepository $eventRepository): Response
     {
+           // if ($this->getUser() == null) {
+        //     return $this->redirectToRoute('app_login');
+        // }
+
         $protocol ="http";
         if(isset($_SERVER['HTTPS'])){
             $protocol ="https";
@@ -20,18 +24,21 @@ class AdminController extends AbstractController
 
         $baseurl = $_SERVER['REDIRECT_BASE'];
 
-        $url= $protocol.'://' .$serverName. $baseurl.'/admin/event/setintervenant/';
+        $url= $protocol.'://' .$serverName. $baseurl.'/event/';
 
-        $events = $eventRepository->calendarExFo();
+        $intervenant = $this->getUser()->getIntervenant();        
+        $events = $eventRepository->calendarUser($intervenant);
         $rdvs=[];
         foreach($events as $event){
-                $textcolor = $event->getTypeEvent()->getTextColor();
-                $background = "#B22222";
-                $border =  $event->getTypeEvent()->getBorderColor();
-            $description = "cliquer ici pour ajouter un intervenant";
-            if($event->getIntervenant() !== null){
-                $description = $event->getIntervenant()->getUser()->getName();
-                $background = "#006400";
+                $textcolor = "#8B0000";
+                $background = "#808080";
+                $border = "#006400";
+                $description = false;
+            if($event->getTypeEvent()->getType() !== "dispo"){
+                $description = false;
+                $textcolor = "#ffffff";
+                $background = "#7CFC00";
+                $border = "#006400";
             }
             $rdvs[] = [
                 'id' => $event->getId(),
@@ -48,11 +55,10 @@ class AdminController extends AbstractController
         }
 
         $data = json_encode($rdvs);
-
-
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
-            "data" => $data
+        return $this->render('user/index.html.twig', [
+            'controller_name' => 'UserController',
+            'data' => $data
         ]);
     }
 }
+

@@ -14,6 +14,21 @@
         {% endblock %}
     </head>
     <body>
+        <header>
+            <nav>
+                <ul>
+                    
+                    <li><a href="{{ path('home') }}">acceuil</a></li>
+                    <li><a href="{{ path('app_login') }}">login</a></li>
+                    <li><a href="{{ path('admin') }}">admin</a></li>
+                    <li><a href="{{ path('user_admin') }}">users</a></li>
+                    <li><a href="{{ path('type_event_index')}}">type event</a></li>
+                    <li><a href="{{ path('event_admin')}}">events</a></li>
+                    <li><a href="{{ path('user')}}">current user</a></li> 
+                </ul>
+
+            </nav>
+        </header>
         {% block body %}{% endblock %}
     </body>
 </html>

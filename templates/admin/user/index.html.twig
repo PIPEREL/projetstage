@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <div> liste des examinateurs </div>
+    {%  for examinateur in examinateurs  %}
+    <div> nom : {{examinateur.user.name}} - code examinateur : {{examinateur.codeExam}} <a href="{{ path('admin_user_show', {'id': examinateur.id})}}"> <button>voir plus</button> </a> </div>
+    {% endfor %}
+    <div> liste des formateurs </div>
+    {%  for formateur in formateurs %}
+    <div> nom : {{formateur.user.name}}  <a href="{{ path('admin_user_show', {'id': formateur.id})}}"> <button>voir plus</button> </a> </div>
+    {% endfor %}
+</div>
+{% endblock %}
