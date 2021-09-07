@@ -75,6 +75,11 @@ class IntervenantRepository extends ServiceEntityRepository
         // ->getResult();
         }
 
+    //SELECT * from event where intervenant_id = intervenant.id && $start_one <= $end_two && $end_one >= $start_two)
+
+    //SELECT * From intervenant where id not in (select intervenant_id from event inner join intervenant where intervenant.id = event.intervenant_id)
+
+    //SELECT * From intervenant where id not in (select intervenant_id from event inner join intervenant where intervenant.id = event.intervenant_id AND event.start <= '2022-09-19 23:00:00' && event.end >= "2022-09-19 00:00:00");
 
    
         
@@ -90,6 +95,4 @@ class IntervenantRepository extends ServiceEntityRepository
     // ->getQuery()
     // ->getResult();
     // }
-
-//SELECT * from event where intervenant_id = intervenant.id && $start_one <= $end_two && $end_one >= $start_two)
  }

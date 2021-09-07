@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Hello HomeController!{% endblock %}
 
-{% block stylesheets %}
+  {% block stylesheets %}
     <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css" integrity="sha256-FjyLCG3re1j4KofUTQQXmaWJw13Jdb7LQvXlkFxTDJI=" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('css/calendar.css')}}">
@@ -14,7 +14,6 @@
 <div class="example-wrapper">
     <h1>Hello </h1>
         <div id='calendar'></div>
-        <div><a href="{{path('user_unavailability')}}">ajouter une indisponibilité</a></div>
 </div>
 {% endblock %}
 

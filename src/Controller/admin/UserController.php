@@ -6,6 +6,7 @@ use DateTime;
 use App\Entity\User;
 use App\Entity\Intervenant;
 use App\Form\IntervenantType;
+use App\Repository\EventRepository;
 use App\Repository\IntervenantRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\Mime\Address;
@@ -111,6 +112,51 @@ class UserController extends AbstractController
             'user' => $user
         ]);
     }
-  
 
+    #[Route('admin/user/show/{id}', name: 'admin_user_show', methods: ['GET', 'POST'])]
+    public function usershow(Intervenant $intervenant, EventRepository $eventRepository)
+    {
+        $protocol ="http";
+        if(isset($_SERVER['HTTPS'])){
+            $protocol ="https";
+        }
+        $serverName = $_SERVER['SERVER_NAME'];
+
+        $baseurl = $_SERVER['REDIRECT_BASE'];
+
+        $url= $protocol.'://' .$serverName. $baseurl.'/admin/event/edit/';
+
+        $events = $eventRepository->calendarUser($intervenant);
+        $rdvs=[];
+        foreach($events as $event){
+                $textcolor = "#8B0000";
+                $background = "#808080";
+                $border = "#006400";
+                $description = false;
+            if($event->getTypeEvent()->getType() !== "dispo"){
+                $description = false;
+                $textcolor = "#ffffff";
+                $background = "#7CFC00";
+                $border = "#006400";
+            }
+            $rdvs[] = [
+                'id' => $event->getId(),
+                'start' => $event->getStart()->format('Y-m-d H:i:s'),
+                'end' => $event->getEnd()->format('Y-m-d H:i:s'),
+                'title' => $event->getTypeEvent()->getTitle(),
+                'description' => $description,
+                'backgroundColor' => $background,
+                'borderColor' => $border,
+                'url' => $url.$event->getId(),
+                'textColor' => $textcolor,
+                'allDay' => $event->getAllDay()       
+            ];
+        }
+
+        $data = json_encode($rdvs);
+        return $this->render('user/index.html.twig', [
+            'controller_name' => 'UserController',
+            'data' => $data
+        ]);
+    }
 }
