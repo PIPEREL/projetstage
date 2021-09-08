@@ -25,6 +25,11 @@ class EventController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            if($form->get("all_day")->getdata() == true){
+            $event->setEnd($event->getEnd()->setTime(23,59));
+            $event->setStart($event->getStart()->setTime(00,00));
+            }
+
             $event->setMaxcandidate(0);
             $event->setIntervenant($this->getUser()->getIntervenant());
             $event->setTypeEvent($typeEventRepository->findOneBy(['title'=>"indisponibilité"]));

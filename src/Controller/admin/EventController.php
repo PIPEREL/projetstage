@@ -51,6 +51,13 @@ class EventController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            
+            if($form->get("all_day")->getdata() == true){
+                $event->setEnd($event->getEnd()->setTime(23,59));
+                $event->setStart($event->getStart()->setTime(00,00));
+                }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
             $entityManager->flush();
