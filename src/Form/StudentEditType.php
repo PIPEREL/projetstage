@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 
-class StudentType extends AbstractType
+class StudentEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -46,7 +46,11 @@ class StudentType extends AbstractType
            
             'choice_value'=> 'title'
             ])
-            ->add('status', CheckboxType::class, ['label'=>'formation désirée?', "mapped"=>"false"])
+            ->add('status', ChoiceType::class, ['label'=>'status','choices' =>['formation' => "formation", 'examens' => "examens", "diplomé" => "diplome" ],
+            'expanded' => false,
+            'multiple' => false,
+        ])
+            ->add('blackListed', CheckboxType::class, ['required' => false])
         ;
     }
 

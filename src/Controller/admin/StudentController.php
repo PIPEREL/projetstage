@@ -5,6 +5,8 @@ namespace App\Controller\admin;
 use DateTime;
 use App\Entity\Student;
 use App\Form\StudentType;
+use App\Form\StudentEditType;
+use App\Form\StudentFilterType;
 use App\Repository\StudentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,11 +16,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('admin/student')]
 class StudentController extends AbstractController
 {
-    #[Route('/', name: 'student_index', methods: ['GET'])]
-    public function index(StudentRepository $studentRepository): Response
+    #[Route('/', name: 'student_index', methods: ['GET','POST'])]
+    public function index(StudentRepository $studentRepository, Request $request): Response
     {
+        $students = $studentRepository->findBy(['blackListed'=>false]);
+
+        $form = $this->createForm(StudentFilterType::class);
+        $filter = $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $students = $studentRepository->filterstudent($filter->get('blackListed')->getdata(), $filter->get('status')->getData());
+        }
         return $this->render('student/index.html.twig', [
-            'students' => $studentRepository->findAll(),
+            'students' => $students,
+            'form' => $form->createView()
         ]);
     }
 
@@ -62,7 +73,7 @@ class StudentController extends AbstractController
     #[Route('/{id}/edit', name: 'student_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Student $student): Response
     {
-        $form = $this->createForm(StudentType::class, $student);
+        $form = $this->createForm(StudentEditType::class, $student);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -4,12 +4,11 @@
 
 {% block body %}
     <h1>Student index</h1>
-
+{{form(form)}}
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>BlackListed</th>
                 <th>Gender</th>
                 <th>Name</th>
                 <th>Firstname</th>
@@ -31,7 +30,7 @@
         {% for student in students %}
             <tr>
                 <td>{{ student.id }}</td>
-                <td>{{ student.blackListed ? 'Yes' : 'No' }}</td>
+                {# <td>{{ student.blackListed ? 'Yes' : 'No' }}</td> #}
                 <td>{{ student.gender }}</td>
                 <td>{{ student.name }}</td>
                 <td>{{ student.firstname }}</td>
@@ -57,7 +56,4 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
-
-    <a href="{{ path('student_new') }}">Create new</a>
 {% endblock %}

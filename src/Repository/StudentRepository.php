@@ -47,4 +47,20 @@ class StudentRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function filterstudent($blacklisted = null , $status = null){
+        $query = $this->createQueryBuilder('s');
+        if($blacklisted != null){
+            $query->andWhere('s.blackListed = :blacklisted')
+            ->setParameter('blacklisted', $blacklisted);
+        }
+        if($status != null){
+            $query->andwhere('s.status = :status')
+            ->setParameter('status', $status);
+        }
+        return $query->getQuery()->getResult();
+
+    }
+
+
 }
