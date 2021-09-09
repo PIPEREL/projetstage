@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StudentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -92,6 +94,16 @@ class Student
      * @ORM\Column(type="string", length=30)
      */
     private $status;
+
+    /**
+     * @ORM\OneToMany(targetEntity=StudentEvent::class, mappedBy="student", orphanRemoval=true)
+     */
+    private $studentEvents;
+
+    public function __construct()
+    {
+        $this->studentEvents = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -286,6 +298,36 @@ class Student
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StudentEvent[]
+     */
+    public function getStudentEvents(): Collection
+    {
+        return $this->studentEvents;
+    }
+
+    public function addStudentEvent(StudentEvent $studentEvent): self
+    {
+        if (!$this->studentEvents->contains($studentEvent)) {
+            $this->studentEvents[] = $studentEvent;
+            $studentEvent->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStudentEvent(StudentEvent $studentEvent): self
+    {
+        if ($this->studentEvents->removeElement($studentEvent)) {
+            // set the owning side to null (unless already changed)
+            if ($studentEvent->getStudent() === $this) {
+                $studentEvent->setStudent(null);
+            }
+        }
 
         return $this;
     }

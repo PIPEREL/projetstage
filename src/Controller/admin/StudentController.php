@@ -4,9 +4,12 @@ namespace App\Controller\admin;
 
 use DateTime;
 use App\Entity\Student;
+use App\Entity\StudentEvent;
 use App\Form\StudentType;
 use App\Form\StudentEditType;
+use App\Form\StudentEventType;
 use App\Form\StudentFilterType;
+use App\Repository\StudentEventRepository;
 use App\Repository\StudentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,11 +65,34 @@ class StudentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'student_show', methods: ['GET'])]
-    public function show(Student $student): Response
+    #[Route('/{id}', name: 'student_show', methods: ['GET', 'POST'])]
+    public function show(Student $student, StudentEventRepository $studentRepository, Request $request): Response
     {
+        $studentevent = new StudentEvent;
+        $studentevent->setStudent($student);
+        $form = $this->createForm(StudentEventType::class, $studentevent);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if($studentRepository->findOneBy(['student'=> $studentevent->getStudent() , 'event'=> $studentevent->getEvent()]) == null ){
+            $studentevent->setNote(false);    
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($studentevent);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('student_show', ['id'=> $student->getId()]);
+            }else{
+
+            $this->addFlash('message', "cet étudiant a déjà été inscrit à cette formation.");
+            return $this->redirectToRoute('student_show', ['id'=> $student->getId()]);
+            }
+            
+        }
+
         return $this->render('student/show.html.twig', [
             'student' => $student,
+            'form' => $form->createView(),
+            'stevents' => $student->getStudentEvents()
         ]);
     }
 

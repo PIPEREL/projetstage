@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -49,6 +51,16 @@ class Event
      * @ORM\JoinColumn(nullable=false)
      */
     private $typeEvent;
+
+    /**
+     * @ORM\OneToMany(targetEntity=StudentEvent::class, mappedBy="event", orphanRemoval=true)
+     */
+    private $studentEvents;
+
+    public function __construct()
+    {
+        $this->studentEvents = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -124,6 +136,36 @@ class Event
     public function setTypeEvent(?TypeEvent $typeEvent): self
     {
         $this->typeEvent = $typeEvent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StudentEvent[]
+     */
+    public function getStudentEvents(): Collection
+    {
+        return $this->studentEvents;
+    }
+
+    public function addStudentEvent(StudentEvent $studentEvent): self
+    {
+        if (!$this->studentEvents->contains($studentEvent)) {
+            $this->studentEvents[] = $studentEvent;
+            $studentEvent->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStudentEvent(StudentEvent $studentEvent): self
+    {
+        if ($this->studentEvents->removeElement($studentEvent)) {
+            // set the owning side to null (unless already changed)
+            if ($studentEvent->getEvent() === $this) {
+                $studentEvent->setEvent(null);
+            }
+        }
 
         return $this;
     }
