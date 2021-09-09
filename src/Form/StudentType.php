@@ -46,7 +46,7 @@ class StudentType extends AbstractType
            
             'choice_value'=> 'title'
             ])
-            ->add('status', CheckboxType::class, ['label'=>'formation désirée?', "mapped"=>"false"])
+            ->add('status', CheckboxType::class, ['label'=>'formation désirée?', "required"=>false, "mapped"=>"false"])
         ;
     }
 

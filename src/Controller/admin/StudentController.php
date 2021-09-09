@@ -25,7 +25,7 @@ class StudentController extends AbstractController
         $filter = $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $students = $studentRepository->filterstudent($filter->get('blackListed')->getdata(), $filter->get('status')->getData());
+            $students = $studentRepository->filterstudent($filter->get('mots')->getdata(), $filter->get('blackListed')->getdata(), $filter->get('status')->getData());
         }
         return $this->render('student/index.html.twig', [
             'students' => $students,

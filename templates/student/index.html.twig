@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>Student index</h1>
-{{form(form)}}
+    {{form(form)}}
     <table class="table">
         <thead>
             <tr>
@@ -56,4 +56,9 @@
             </tr>
         {% endfor %}
         </tbody>
+    </table>
+
+    <a href="{{ path('student_new') }}">Create new</a>
+
+
 {% endblock %}
