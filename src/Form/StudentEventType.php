@@ -17,13 +17,13 @@ class StudentEventType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $student= $options['data']->getStudent()->getstatus();
+        $student= $options['data']->getStudent();
         $builder
             ->add('event', EntityType::class, ['class' => Event::class ,  'choice_label' => function (Event $event) {
-                return  $event->getTypeEvent()->gettype() .' du '. $event->getstart()->format('Y-m-d') . ' au ' . $event->getEnd()->format('Y-m-d');
+                return  $event->getTypeEvent()->gettype() . " ". $event->getTypeEvent()->getTitle() .' du '. $event->getstart()->format('Y-m-d');
             }, 
             'query_builder' => function(EventRepository $eventRepository) use ($student){
-                return $eventRepository->findevent($student);
+                return $eventRepository->findevent($student->getstatus(), $student->getTcf());
             } 
             ])
             ->add('Envoyer', SubmitType::class)
