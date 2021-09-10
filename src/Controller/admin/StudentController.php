@@ -28,7 +28,7 @@ class StudentController extends AbstractController
         $filter = $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $students = $studentRepository->filterstudent($filter->get('mots')->getdata(), $filter->get('blackListed')->getdata(), $filter->get('status')->getData());
+            $students = $studentRepository->filterstudent($filter->get('mots')->getdata(), $filter->get('blackListed')->getdata(), $filter->get('status')->getData(), $filter->get('assigned')->getData());
         }
         return $this->render('student/index.html.twig', [
             'students' => $students,
@@ -79,7 +79,9 @@ class StudentController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($studentevent);
             $entityManager->flush();
-
+            $student->setAssigned(true);
+            $entityManager->persist($student);
+            $entityManager->flush();
             return $this->redirectToRoute('student_show', ['id'=> $student->getId()]);
             }else{
 

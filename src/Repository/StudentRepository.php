@@ -48,7 +48,7 @@ class StudentRepository extends ServiceEntityRepository
     }
     */
 
-    public function filterstudent($mots = null, $blacklisted = null , $status = null){
+    public function filterstudent($mots = null, $blacklisted = null , $status = null, $assigned = null){
         $query = $this->createQueryBuilder('s');
         if($mots !== null){
             // $query->andWhere('MATCH_AGAINST(s.name, s.firstname) AGAINST (:mots boolean)>0')
@@ -58,13 +58,17 @@ class StudentRepository extends ServiceEntityRepository
             ->orWhere('MATCH_AGAINST(s.name, s.firstname) AGAINST (:mots boolean)>0')
             ->setParameter('mots', $mots); 
         }
-        if($blacklisted != null){
+        if($blacklisted !== null){
             $query->andWhere('s.blackListed = :blacklisted')
             ->setParameter('blacklisted', $blacklisted);
         }
         if($status != null){
             $query->andwhere('s.status = :status')
             ->setParameter('status', $status);
+        }
+        if($assigned !== null){
+            $query->andwhere('s.assigned = :assigned')
+            ->setParameter('assigned', $assigned);
         }
         return $query->getQuery()->getResult();
 

@@ -100,6 +100,11 @@ class Student
      */
     private $studentEvents;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $assigned;
+
     public function __construct()
     {
         $this->studentEvents = new ArrayCollection();
@@ -328,6 +333,18 @@ class Student
                 $studentEvent->setStudent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAssigned(): ?bool
+    {
+        return $this->assigned;
+    }
+
+    public function setAssigned(bool $assigned): self
+    {
+        $this->assigned = $assigned;
 
         return $this;
     }

@@ -25,6 +25,39 @@
         </tbody>
     </table>
 
+    <h1>students</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>nom </th>
+                <th>prénom</th>
+                <th>validation</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for studentevent in studentevents %}
+            <tr>
+                <td>{{ studentevent.student.name }} </td>
+                <td>{{ studentevent.student.firstname }}</td>
+                <td><form action="" method="POST">
+                 <button type="submit"><input type="hidden" name="id" value="{{studentevent.id}}">
+                  <input type="hidden" name="validation" value="1"> 
+                    <i class="fas fa-check"></i></button></form> 
+                <form action="" method="POST">
+                 <button type="submit"><input type="hidden" name="id" value="{{studentevent.id}}">
+                  {# <input type="hidden" name="validation" value="0">  #}
+                    <i class="fas fa-times"></i></button></form>    
+                   </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
     <a href="{{ path('user') }}">back </a>
 
     {% if event.typeEvent.title == "indisponibilité" %}

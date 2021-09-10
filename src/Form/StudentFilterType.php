@@ -21,6 +21,10 @@ class StudentFilterType extends AbstractType
             'expanded' => false,
             'multiple' => false,
         ])
+            ->add('assigned', ChoiceType::class, ['label'=>'assigné', 'mapped'=>false, 'required'=>false,'choices' =>['oui' => true, 'non' => false ],
+            'expanded' => false,
+            'multiple' => false,
+        ])
         ->add('filtrer', SubmitType::class)
         ;
     }
