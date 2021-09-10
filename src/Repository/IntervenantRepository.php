@@ -56,7 +56,7 @@ class IntervenantRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findavailable($end , $start){
+    public function findavailable($end , $start, $type){
         $test = $this->createQueryBuilder('av')
         ->JOIN('App:Event', 'e')
         ->where('av.id = e.intervenant')
@@ -64,7 +64,7 @@ class IntervenantRepository extends ServiceEntityRepository
         ->andwhere("e.end >= :start ");
       
     
-        return $this->createQueryBuilder('a')
+        $query = $this->createQueryBuilder('a')
         ->Join('App:User', 'u')
         ->where('a.user = u.id')
         ->andwhere('a.id NOT IN ('. $test->getDQL()  .')') 
@@ -73,6 +73,12 @@ class IntervenantRepository extends ServiceEntityRepository
         ->setparameter(':start', $start);
         // ->getQuery()
         // ->getResult();
+        if($type == "examens"){
+            $query->andwhere('a.code_exam != :code')
+            ->setParameter('code', 'null');
+        }
+
+        return $query;
         }
 
     //SELECT * from event where intervenant_id = intervenant.id && $start_one <= $end_two && $end_one >= $start_two)

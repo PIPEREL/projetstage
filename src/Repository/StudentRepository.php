@@ -75,4 +75,18 @@ class StudentRepository extends ServiceEntityRepository
     }
 
 
+    public function findstudent($type = null, $tcf = null){
+        $query = $this->createQueryBuilder('s')
+        ->andwhere('s.status = :type')
+        ->setParameter('type', $type)
+        ->andwhere('s.assigned = :assigned')
+        ->setParameter('assigned', 'false');
+        if($type == "examens" && $tcf !== null ){
+         $query->andwhere('s.tcf = :tcf')
+         ->setParameter('tcf', $tcf);
+         }
+        
+        return $query;
+
+    }
 }

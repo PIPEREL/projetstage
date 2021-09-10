@@ -51,6 +51,7 @@ class StudentController extends AbstractController
             $student->setStatus('examens');
             }
             $student->setBlackListed(false);
+            $student->setAssigned(false);
             $student->setCreatedAt(new DateTime('NOW'));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($student);
@@ -66,7 +67,7 @@ class StudentController extends AbstractController
     }
 
     #[Route('/{id}', name: 'student_show', methods: ['GET', 'POST'])]
-    public function show(Student $student, StudentEventRepository $studentRepository, Request $request): Response
+    public function show(Student $student, StudentEventRepository $studentEventRepository, Request $request): Response
     {
         $studentevent = new StudentEvent;
         $studentevent->setStudent($student);
@@ -74,7 +75,7 @@ class StudentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($studentRepository->findOneBy(['student'=> $studentevent->getStudent() , 'event'=> $studentevent->getEvent()]) == null ){
+            if($studentEventRepository->findOneBy(['student'=> $studentevent->getStudent() , 'event'=> $studentevent->getEvent()]) == null ){
             $studentevent->setNote(false);    
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($studentevent);
