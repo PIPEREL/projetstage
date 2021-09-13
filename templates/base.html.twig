@@ -5,8 +5,10 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
+           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
+            
         {% endblock %}
 
         {% block javascripts %}
@@ -20,6 +22,9 @@
                     
                     <li><a href="{{ path('home') }}">acceuil</a></li>
                     <li><a href="{{ path('app_login') }}">login</a></li>
+
+                    <li><a href="{{ path('student_index') }}">student</a></li>
+
                     <li><a href="{{ path('admin') }}">admin</a></li>
                     <li><a href="{{ path('user_admin') }}">users</a></li>
                     <li><a href="{{ path('type_event_index')}}">type event</a></li>
