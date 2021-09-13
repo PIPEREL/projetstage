@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ajouter un étudiant{% endblock %}
+
+{% block body %}
+    <h1>ajouter des étudiants</h1>
+
+    {{ include('admin/event/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('event_edit', {'id': event.id})}}">Editer l'event</a>
+{% endblock %}

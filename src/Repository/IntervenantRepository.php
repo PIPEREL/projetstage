@@ -56,15 +56,16 @@ class IntervenantRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findavailable($end , $start){
+    public function findavailable($end , $start, $type){
+
         $test = $this->createQueryBuilder('av')
         ->JOIN('App:Event', 'e')
         ->where('av.id = e.intervenant')
         ->andwhere("e.start <= :end ")
         ->andwhere("e.end >= :start ");
-      
-    
-        return $this->createQueryBuilder('a')
+
+        $query = $this->createQueryBuilder('a')
+
         ->Join('App:User', 'u')
         ->where('a.user = u.id')
         ->andwhere('a.id NOT IN ('. $test->getDQL()  .')') 
@@ -73,26 +74,13 @@ class IntervenantRepository extends ServiceEntityRepository
         ->setparameter(':start', $start);
         // ->getQuery()
         // ->getResult();
+        if($type == "examens"){
+            $query->andwhere('a.code_exam != :code')
+            ->setParameter('code', 'null');
         }
 
-    //SELECT * from event where intervenant_id = intervenant.id && $start_one <= $end_two && $end_one >= $start_two)
+        return $query;
 
-    //SELECT * From intervenant where id not in (select intervenant_id from event inner join intervenant where intervenant.id = event.intervenant_id)
+        }
 
-    //SELECT * From intervenant where id not in (select intervenant_id from event inner join intervenant where intervenant.id = event.intervenant_id AND event.start <= '2022-09-19 23:00:00' && event.end >= "2022-09-19 00:00:00");
-
-   
-        
-    // public function findavailable(){
-    // $test = $this->createQueryBuilder('av')
-    // ->JOIN('App:Event', 'e')
-    // ->where('av.id = e.intervenant')
-    // ->andwhere("e.start <= '2021-09-20 23:00:00' ")
-    // ->andwhere("e.end >= '2021-09-20 00:00:00' ");
-
-    // return $this->createQueryBuilder('a')
-    // ->where('a.id NOT IN ('. $test->getDQL()  .')') 
-    // ->getQuery()
-    // ->getResult();
-    // }
  }

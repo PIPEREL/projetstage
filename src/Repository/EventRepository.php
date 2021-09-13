@@ -67,5 +67,22 @@ class EventRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findevent($status = null, $formation = null){
+        $query = $this->createQueryBuilder('e');
+        if($status != null){
+            $query->JOIN('App:TypeEvent', 't')
+            ->where('e.typeEvent = t.id')
+            ->andWhere('t.type = :val')
+            ->setParameter('val', $status);
+            if($formation != null && $status == "examens"){
+              $query->Andwhere('t.title = :form')
+              ->setParameter('form', $formation);  
+            }
+            }
+        $query->andwhere('e.start > :now')
+        ->setParameter('now', new \datetime('now'));
+        return $query;
+     
+    }
     
 }

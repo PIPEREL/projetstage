@@ -7,26 +7,32 @@
 
     <table class="table">
         <tbody>
+
+        <tr>
+                <th>type</th>
+                <td>{{ event.typeEvent.type}}</td>
+            </tr>
+            {% if event.typeEvent.type == "examens" %}
+              <tr>
+                <th>libelle</th>
+                <td>{{ event.typeEvent.title}}</td>
+            </tr>
+            {% endif %}
             <tr>
-                <th>Id</th>
-                <td>{{ event.id }}</td>
+                <th>Start-End</th>
+                <td>{{ event.start ? event.start|date('Y-m-d H:i:s') : '' }} - {{ event.end ? event.end|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Start</th>
-                <td>{{ event.start ? event.start|date('Y-m-d H:i:s') : '' }}</td>
+                <th>intervenant</th>
+           {% if event.intervenant != null %} <td> {{event.intervenant.user.name}} {{event.intervenant.user.firstname}} </td> {% endif %}
+                <td> <a href="{{path('set_intervenant', {'id': event.id}) }}"> choisir un intervenant</a> </td>
+
             </tr>
             <tr>
-                <th>End</th>
-                <td>{{ event.end ? event.end|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Maxcandidate</th>
+                <th>nombre de candidats max</th>
                 <td>{{ event.maxcandidate }}</td>
-            </tr>
-            <tr>
-                <th>All_day</th>
-                <td>{{ event.allDay ? 'Yes' : 'No' }}</td>
-            </tr>
+            </tr> 
+
         </tbody>
     </table>
 
@@ -35,4 +41,42 @@
     <a href="{{ path('event_edit', {'id': event.id}) }}">edit</a>
 
     {{ include('admin/event/_delete_form.html.twig') }}
+
+
+     <h1>students</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>nom </th>
+                <th>prénom</th>
+                <th>validation</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for studentevent in studentevents %}
+            <tr>
+                <td>{{ studentevent.student.name }} </td>
+                <td>{{ studentevent.student.firstname }}</td>
+               {% if studentevent.note == false %} <td><form action="" method="POST">
+                 <button type="submit"><input type="hidden" name="id" value="{{studentevent.id}}">
+                  <input type="hidden" name="validation" value="1"> 
+                    <i class="fas fa-check"></i></button></form> 
+                <form action="" method="POST">
+                 <button type="submit"><input type="hidden" name="id" value="{{studentevent.id}}">
+                    <i class="fas fa-times"></i></button></form>    
+                   </td>
+                {% else %}
+                <td>noté!</td>
+                {% endif %}   
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{path('event_add_student', {'id': event.id})}}"> ajouter des étudiants </a>
+
+
 {% endblock %}

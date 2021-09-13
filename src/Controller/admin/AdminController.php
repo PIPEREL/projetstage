@@ -20,7 +20,9 @@ class AdminController extends AbstractController
 
         $baseurl = $_SERVER['REDIRECT_BASE'];
 
-        $url= $protocol.'://' .$serverName. $baseurl.'/admin/event/setintervenant/';
+        // $url= $protocol.'://' .$serverName. $baseurl.'/admin/event/setintervenant/';
+        $url= $protocol.'://' .$serverName. $baseurl.'/admin/event/';
+
 
         $events = $eventRepository->calendarExFo();
         $rdvs=[];
@@ -28,7 +30,8 @@ class AdminController extends AbstractController
                 $textcolor = $event->getTypeEvent()->getTextColor();
                 $background = "#B22222";
                 $border =  $event->getTypeEvent()->getBorderColor();
-            $description = "cliquer ici pour ajouter un intervenant";
+            $description = "pas encore d'intervenant";
+
             if($event->getIntervenant() !== null){
                 $description = $event->getIntervenant()->getUser()->getName();
                 $background = "#006400";
