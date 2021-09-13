@@ -29,8 +29,7 @@ class StudentEvent2Type extends AbstractType
             },
             "multiple" => true,
             "mapped" => false
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

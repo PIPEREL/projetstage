@@ -54,7 +54,7 @@
             <tr>
                 <td>{{ studentevent.student.name }} </td>
                 <td>{{ studentevent.student.firstname }}</td>
-                <td><form action="" method="POST">
+               {% if studentevent.note == false %} <td><form action="" method="POST">
                  <button type="submit"><input type="hidden" name="id" value="{{studentevent.id}}">
                   <input type="hidden" name="validation" value="1"> 
                     <i class="fas fa-check"></i></button></form> 
@@ -62,6 +62,9 @@
                  <button type="submit"><input type="hidden" name="id" value="{{studentevent.id}}">
                     <i class="fas fa-times"></i></button></form>    
                    </td>
+                {% else %}
+                <td>noté!</td>
+                {% endif %}   
             </tr>
         {% else %}
             <tr>

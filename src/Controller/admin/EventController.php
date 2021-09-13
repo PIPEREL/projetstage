@@ -74,7 +74,6 @@ class EventController extends AbstractController
                 $entityManager->persist($studentToAdd);
                 }
             }
-            dd('hello world');
             $entityManager->flush();
    
              return $this->redirectToRoute('event_show', ['id'=> $event->getId()]);
@@ -116,7 +115,7 @@ class EventController extends AbstractController
         ]);
     }
 
-    #[Route('admin/event/{id}', name: 'event_show', methods: ['GET'])]
+    #[Route('admin/event/{id}', name: 'event_show', methods: ['GET','POST'])]
     public function show(Event $event, StudentEventRepository $studentEventRepository, StudentRepository $studentRepository, Request $request): Response
     {
         if ($request->request->get('id') !== null) {
@@ -137,7 +136,8 @@ class EventController extends AbstractController
                $entityManager->flush();
            }
    
-           $studentevent = $studentEventRepository->findby(['event'=>$event, 'note'=> false]);
+           $studentevent = $studentEventRepository->findby(['event'=>$event]);
+        //    $studentevent = $studentEventRepository->findby(['event'=>$event, 'note'=> false]);
 
         return $this->render('admin/event/show.html.twig', [
             'event' => $event,
