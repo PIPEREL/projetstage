@@ -102,6 +102,7 @@ class UserController extends AbstractController
         
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+            // $entityManager->persist($intervenant);
             $entityManager->flush();
             return $this->redirectToRoute('user_admin');
         }

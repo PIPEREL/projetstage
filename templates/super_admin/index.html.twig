@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SuperAdminController!{% endblock %}
+
+{% block body %}
+test
+{% for user in users %}
+  <div> nom : {{user.name}} {{user.firstname}} </div>
+{% endfor %}
+ <a href="{{ path('admin_register') }}">ajouter un nouvel administrateur </a>
+{% endblock %}
