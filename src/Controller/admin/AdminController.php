@@ -23,6 +23,7 @@ class AdminController extends AbstractController
         // $url= $protocol.'://' .$serverName. $baseurl.'/admin/event/setintervenant/';
         $url= $protocol.'://' .$serverName. $baseurl.'/admin/event/';
 
+
         $events = $eventRepository->calendarExFo();
         $rdvs=[];
         foreach($events as $event){
@@ -30,7 +31,9 @@ class AdminController extends AbstractController
                 $textcolor = $event->getTypeEvent()->getTextColor();
                 $background = "#B22222";
                 $border =  $event->getTypeEvent()->getBorderColor();
+
             $description = "pas d'intervenant " ." | ".$numberOfStudent."/".$event->getMaxcandidate()." candidats";
+
             if($event->getIntervenant() !== null){
                 $description = $event->getIntervenant()->getUser()->getName()." | ".$numberOfStudent."/".$event->getMaxcandidate()." candidats";
                 $background = "#006400";

@@ -59,6 +59,7 @@ class EventController extends AbstractController
             return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
         }
 
+
         if ($request->request->get('id') !== null) {
          $repo = $studentEventRepository->findOneBy(['id'=>$request->request->get('id')]);
          $student = $studentRepository->findOneBy(['id'=>$repo->getStudent()]);

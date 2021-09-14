@@ -102,6 +102,7 @@ class EventController extends AbstractController
                 $event->setStart($event->getStart()->setTime(00,00));
                 }
 
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
             $entityManager->flush();
@@ -114,6 +115,7 @@ class EventController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     #[Route('admin/event/{id}', name: 'event_show', methods: ['GET','POST'])]
     public function show(Event $event, StudentEventRepository $studentEventRepository, StudentRepository $studentRepository, Request $request): Response
@@ -144,6 +146,7 @@ class EventController extends AbstractController
             'event' => $event,
             'studentevents'=> $studentevent,
             'count' => $countstudent
+
         ]);
     }
 

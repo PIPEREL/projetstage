@@ -28,6 +28,7 @@
                <td> {% if event.intervenant is null %} pas encore intervenant {% else %}{{ event.intervenant.user.name }}{% endif %}</td>
             
                 {# <td>{{ event.allDay ? 'Yes' : 'No' }}</td> #}
+
                 <td>
                     <a href="{{ path('event_show', {'id': event.id}) }}">show</a>
                     <a href="{{ path('event_edit', {'id': event.id}) }}">edit</a>

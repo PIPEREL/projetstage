@@ -62,6 +62,7 @@ class Event
         $this->studentEvents = new ArrayCollection();
     }
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -169,4 +170,5 @@ class Event
 
         return $this;
     }
+
 }

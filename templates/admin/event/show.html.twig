@@ -7,6 +7,7 @@
 
     <table class="table">
         <tbody>
+
         <tr>
                 <th>type</th>
                 <td>{{ event.typeEvent.type}}</td>
@@ -31,6 +32,7 @@
                 <th>nombre de candidats</th>
                 <td>  {% if count > event.maxcandidate %} /!\ {% endif %} {{count}} / {{ event.maxcandidate }} {% if count > event.maxcandidate %} /!\ {% endif %}</td>
             </tr> 
+
         </tbody>
     </table>
 
@@ -39,6 +41,7 @@
     <a href="{{ path('event_edit', {'id': event.id}) }}">edit</a>
 
     {{ include('admin/event/_delete_form.html.twig') }}
+
 
      <h1>students</h1>
     <table class="table">
@@ -74,5 +77,6 @@
         </tbody>
     </table>
     <a href="{{path('event_add_student', {'id': event.id})}}"> ajouter des étudiants </a>
+
 
 {% endblock %}
