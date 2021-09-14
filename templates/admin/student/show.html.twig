@@ -89,6 +89,7 @@
          <th>start</th>
          <th>end</th>
          <th>type</th>
+         <th>delete</th>
         </tr>
     </thead>
     <tbody>
@@ -98,7 +99,18 @@
                 <td>{{ stevent.event.start ? stevent.event.start|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ stevent.event.end ? stevent.event.end|date('Y-m-d H:i:s') : ''  }}</td>
                 <td>{{ stevent.event.typeEvent.type }}</td>
+                <td> <form method="post" action="{{ path('student_event_delete', {'id': stevent.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                <label for="assigned">retirer le statut "assigné"</label>
+                <input type="checkbox" name="assigned">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ stevent.id) }}">
+                <button class="btn">Delete</button>
+    </form>
+                
+                </td>
+                
             </tr>
+   
+
         {% endfor %}
     </table>
 
