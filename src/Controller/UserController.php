@@ -12,9 +12,9 @@ class UserController extends AbstractController
     #[Route('/user', name: 'user')]
     public function index(EventRepository $eventRepository): Response
     {
-           // if ($this->getUser() == null) {
-        //     return $this->redirectToRoute('app_login');
-        // }
+           if ($this->getUser() == null) {
+           return $this->redirectToRoute('app_login');
+         }
 
         $protocol ="http";
         if(isset($_SERVER['HTTPS'])){

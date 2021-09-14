@@ -137,11 +137,13 @@ class EventController extends AbstractController
            }
    
            $studentevent = $studentEventRepository->findby(['event'=>$event]);
+           $countstudent = count($studentevent);
         //    $studentevent = $studentEventRepository->findby(['event'=>$event, 'note'=> false]);
 
         return $this->render('admin/event/show.html.twig', [
             'event' => $event,
-            'studentevents'=> $studentevent 
+            'studentevents'=> $studentevent,
+            'count' => $countstudent
         ]);
     }
 

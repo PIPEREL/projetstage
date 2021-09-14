@@ -26,12 +26,13 @@ class AdminController extends AbstractController
         $events = $eventRepository->calendarExFo();
         $rdvs=[];
         foreach($events as $event){
+                $numberOfStudent = count($event->getStudentEvents());
                 $textcolor = $event->getTypeEvent()->getTextColor();
                 $background = "#B22222";
                 $border =  $event->getTypeEvent()->getBorderColor();
-            $description = "pas encore d'intervenant";
+            $description = "pas d'intervenant " ." | ".$numberOfStudent."/".$event->getMaxcandidate()." candidats";
             if($event->getIntervenant() !== null){
-                $description = $event->getIntervenant()->getUser()->getName();
+                $description = $event->getIntervenant()->getUser()->getName()." | ".$numberOfStudent."/".$event->getMaxcandidate()." candidats";
                 $background = "#006400";
             }
             $rdvs[] = [

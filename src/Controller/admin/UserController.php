@@ -124,7 +124,7 @@ class UserController extends AbstractController
 
         $baseurl = $_SERVER['REDIRECT_BASE'];
 
-        $url= $protocol.'://' .$serverName. $baseurl.'/admin/event/edit/';
+        $url= $protocol.'://' .$serverName. $baseurl.'/admin/event/';
 
         $events = $eventRepository->calendarUser($intervenant);
         $rdvs=[];
