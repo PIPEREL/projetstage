@@ -19,10 +19,10 @@ class StudentEventController extends AbstractController
     public function delete(Request $request, StudentEvent $studentEvent, StudentRepository $studentRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$studentEvent->getId(), $request->request->get('_token'))) {
-           
+
             $entityManager = $this->getDoctrine()->getManager();
-            if($request->request->get('assigned') == true){
-                $student = $studentRepository->findOneBy(['id'=>$studentEvent->getStudent()]);
+            $student = $studentRepository->findOneBy(['id'=>$studentEvent->getStudent()]);
+            if($request->request->get('assigned') == true){   
                 $student->setAssigned(false);
                 $entityManager->persist($student);
             }
@@ -30,6 +30,7 @@ class StudentEventController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('student_event_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('student_show', ['id'=> $student->getId()]);
     }
+
 }

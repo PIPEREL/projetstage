@@ -26,7 +26,7 @@ class SuperAdminController extends AbstractController
     }
     
     #[Route('super/admin/register', name: 'admin_register')]
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder,  MailerInterface $mailer): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
