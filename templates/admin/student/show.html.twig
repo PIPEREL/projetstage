@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Student{% endblock %}
+
+{% block body %}
+ {% for message in app.flashes('message') %}
+<div class="alert alert-success" role="alert">{{ message }}</div>{% endfor %}
+
+    <h1>Student</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ student.id }}</td>
+            </tr>
+            <tr>
+                <th>BlackListed</th>
+                <td>{{ student.blackListed ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>{{ student.gender }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ student.name }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ student.firstname }}</td>
+            </tr>
+            <tr>
+                <th>NativeCountry</th>
+                <td>{{ student.nativeCountry }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ student.createdAt ? student.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nationality</th>
+                <td>{{ student.nationality }}</td>
+            </tr>
+            <tr>
+                <th>UsualLanguage</th>
+                <td>{{ student.usualLanguage }}</td>
+            </tr>
+            <tr>
+                <th>NativeLanguage</th>
+                <td>{{ student.nativeLanguage }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ student.phone }}</td>
+            </tr>
+            <tr>
+                <th>MobilePhone</th>
+                <td>{{ student.mobilePhone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ student.email }}</td>
+            </tr>
+            <tr>
+                <th>Birthday</th>
+                <td>{{ student.birthday ? student.birthday|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Tcf</th>
+                <td>{{ student.tcf }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ student.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    
+
+    <a href="{{ path('student_edit', {'id': student.id}) }}">edit</a>
+
+     <h2>Formations</h2>
+    <table>
+    <thead>
+      <tr>
+         <th>Id</th>
+         <th>start</th>
+         <th>end</th>
+         <th>type</th>
+         <th>delete</th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for stevent in stevents %}
+            <tr>
+                <td>{{ stevent.id }}</td>
+                <td>{{ stevent.event.start ? stevent.event.start|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ stevent.event.end ? stevent.event.end|date('Y-m-d H:i:s') : ''  }}</td>
+                <td>{{ stevent.event.typeEvent.type }}</td>
+                <td> <form method="post" action="{{ path('student_event_delete', {'id': stevent.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                <label for="assigned">retirer le statut "assigné"</label>
+                <input type="checkbox" name="assigned">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ stevent.id) }}">
+                <button class="btn">Delete</button>
+    </form>
+                
+                </td>
+                
+            </tr>
+   
+
+        {% endfor %}
+    </table>
+
+  {{form(form)}}
+
+<a href="{{ path('student_index') }}">back to list</a>
+
+{% endblock %}

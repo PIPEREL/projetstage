@@ -2,10 +2,15 @@
 
 namespace App\Controller\admin;
 
+use DateTime;
+use App\Entity\User;
 use App\Repository\EventRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AdminController extends AbstractController
 {
@@ -27,13 +32,17 @@ class AdminController extends AbstractController
         $events = $eventRepository->calendarExFo();
         $rdvs=[];
         foreach($events as $event){
+                $numberOfStudent = count($event->getStudentEvents());
                 $textcolor = $event->getTypeEvent()->getTextColor();
                 $background = "#B22222";
                 $border =  $event->getTypeEvent()->getBorderColor();
-            $description = "pas encore d'intervenant";
+
+
+            $description = "pas d'intervenant " ." | ".$numberOfStudent."/".$event->getMaxcandidate()." candidats";
+
 
             if($event->getIntervenant() !== null){
-                $description = $event->getIntervenant()->getUser()->getName();
+                $description = $event->getIntervenant()->getUser()->getName()." | ".$numberOfStudent."/".$event->getMaxcandidate()." candidats";
                 $background = "#006400";
             }
             $rdvs[] = [
