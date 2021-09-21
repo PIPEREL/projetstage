@@ -37,7 +37,9 @@ class AdminController extends AbstractController
                 $background = "#B22222";
                 $border =  $event->getTypeEvent()->getBorderColor();
 
+
             $description = "pas d'intervenant " ." | ".$numberOfStudent."/".$event->getMaxcandidate()." candidats";
+
 
             if($event->getIntervenant() !== null){
                 $description = $event->getIntervenant()->getUser()->getName()." | ".$numberOfStudent."/".$event->getMaxcandidate()." candidats";
