@@ -47,10 +47,18 @@
                     <li class="nav-item">
                       <a class="nav-link" href="{{ path('user')}}">current user</a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ path('student_index') }}">student</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ path('super_admin') }}">super admin</a>
+                    </li>
                   </ul>
                 </div>
               </div>
-            </nav>
+          </nav>
+        </haeder>
+
         {% block body %}{% endblock %}
 
 

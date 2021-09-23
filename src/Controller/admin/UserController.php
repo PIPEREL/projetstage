@@ -102,6 +102,7 @@ class UserController extends AbstractController
         
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+            // $entityManager->persist($intervenant);
             $entityManager->flush();
             return $this->redirectToRoute('user_admin');
         }
@@ -124,7 +125,7 @@ class UserController extends AbstractController
 
         $baseurl = $_SERVER['REDIRECT_BASE'];
 
-        $url= $protocol.'://' .$serverName. $baseurl.'/admin/event/edit/';
+        $url= $protocol.'://' .$serverName. $baseurl.'/admin/event/';
 
         $events = $eventRepository->calendarUser($intervenant);
         $rdvs=[];
