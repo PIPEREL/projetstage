@@ -1,0 +1,8 @@
+@import url('bootstraps/scss/bootstraps');
+
+.SecurityForm{
+    height: 100vh !important ;
+    width: 100vw !important ;
+    display: flex;
+    align-items: center;
+}

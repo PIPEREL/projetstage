@@ -21,7 +21,8 @@
                 <td>{{ type_event.title }}</td>
                 <td>{{ type_event.type }}</td>
                 <td>
-                    <div>{{ include('admin/type_event/_delete_form.html.twig') }} <a href="{{ path('type_event_edit', {'id': type_event.id}) }}">edit</a>
+                    <div>
+                        {{ include('admin/type_event/_delete_form.html.twig') }} <a href="{{ path('type_event_edit', {'id': type_event.id}) }}">edit</a>
                     </div>
                 </td>
             </tr>
