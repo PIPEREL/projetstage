@@ -3,9 +3,9 @@
 {% block title %}New Student{% endblock %}
 
 {% block body %}
-    <h1>Create new Student</h1>
+    <h1 class='text-center'>Create new Student</h1>
 
     {{ include('admin/student/_form.html.twig') }}
 
-    <a href="{{ path('student_index') }}">back to list</a>
+    <a  class='btn btn-primary w-100 mt-3' href="{{ path('student_index') }}">back to list</a>
 {% endblock %}
