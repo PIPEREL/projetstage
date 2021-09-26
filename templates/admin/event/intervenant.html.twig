@@ -3,9 +3,9 @@
 {% block title %}Edit TypeEvent{% endblock %}
 
 {% block body %}
-    <h1>Edit TypeEvent</h1>
+    <h1 class='text-center'>Edit TypeEvent</h1>
 
     {{ include('admin/event/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('event_edit', {'id': event.id})}}">Editer l'event</a>
+    <a class='btn btn-primary' href="{{ path('event_edit', {'id': event.id})}}">Editer l'event</a>
 {% endblock %}

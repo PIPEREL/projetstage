@@ -1,12 +1,15 @@
 @import url('bootstraps/scss/bootstraps');
 
 .SecurityForm{
-    height: 100vh !important ;
-    width: 100vw !important ;
-    display: flex;
+    height: 40vh;
+    width: 40vw;
+    margin: auto;
+    border: 2px solid black;
     align-items: center;
-    flex-direction: column;
-    margin-top: 15%;
+    border-radius: 10px;
+    display: flex;
+    box-shadow: 3px 3px 3px black;
+    background: linear-gradient(#af67e9, #6565e7);
 }
 
 .SecurityForm button{
@@ -38,4 +41,22 @@
 
 .btnLogout{
     width: 200px;
+}
+
+
+.SecurityBox{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: 100vh !important ;
+    width: 100vw !important ;
+}
+
+
+.SecurityBox img{
+    height: 50%;
+}
+
+.SecurityBox button:hover{
+    background-color: red;
 }
