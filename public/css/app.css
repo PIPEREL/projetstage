@@ -9,7 +9,7 @@
     border-radius: 10px;
     display: flex;
     box-shadow: 3px 3px 3px black;
-    background: linear-gradient(#af67e9, #6565e7);
+    background: linear-gradient(#aaaaaa, #c9c9c9);
 }
 
 .SecurityForm button{
