@@ -12,6 +12,7 @@ class UserController extends AbstractController
     #[Route('/user', name: 'user')]
     public function index(EventRepository $eventRepository): Response
     { // calendrier de l'utilisateur connecté.
+
            if ($this->getUser() == null) {
            return $this->redirectToRoute('app_login');
          }

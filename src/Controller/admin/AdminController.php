@@ -32,6 +32,7 @@ class AdminController extends AbstractController
         $rdvs=[];
         foreach($events as $event){ // gère l'apparence et les données passés au javascript
                 $numberOfStudent = count($event->getStudentEvents()); 
+
                 $textcolor = $event->getTypeEvent()->getTextColor();
                 $background = "#B22222";
                 $border =  $event->getTypeEvent()->getBorderColor();
@@ -43,6 +44,7 @@ class AdminController extends AbstractController
             if($event->getIntervenant() !== null){
                 $description = $event->getIntervenant()->getUser()->getName()." | ".$numberOfStudent."/".$event->getMaxcandidate()." candidats";
                 $background = "#006400"; // $event->gettypeevent->getbagroundcolor();
+
             }
             $rdvs[] = [
                 'id' => $event->getId(),
