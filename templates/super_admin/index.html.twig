@@ -3,9 +3,12 @@
 {% block title %}Hello SuperAdminController!{% endblock %}
 
 {% block body %}
-test
+
 {% for user in users %}
-  <div> nom : {{user.name}} {{user.firstname}} </div>
+<h2>
+  <div> Utilisateur : {{user.name}} {{user.firstname}}</div>
+</h2>
 {% endfor %}
- <a href="{{ path('admin_register') }}">ajouter un nouvel administrateur </a>
+ <a  class=' btn btn-success' href="{{ path('admin_register') }}">ajouter un nouvel administrateur </a>
+
 {% endblock %}

@@ -18,6 +18,7 @@ class SuperAdminController extends AbstractController
     #[Route('/super/admin', name: 'super_admin')]
     public function index(UserRepository $userRepository): Response
 
+
     {// index des super admins
 
         $admin =$userRepository->findbyrole();
@@ -29,6 +30,7 @@ class SuperAdminController extends AbstractController
     
     #[Route('super/admin/register', name: 'admin_register')]
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+
 
     { // création d'administrateur et super administrateurs 
 

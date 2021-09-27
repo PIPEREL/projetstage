@@ -1,14 +1,16 @@
-{{form_start(form)}}
-{{form_row(form.gender)}} 
-{{form_row(form.name)}}
-{{form_row(form.firstname)}}
-{{form_row(form.address)}}
-{{form_row(form.email)}}
-{{form_row(form.phone)}}
 
-<div> {{form_label(form.dailyRate)}}{{form_widget(form.dailyRate, {attr: {value : user.intervenant.dailyRate } })}}</div>
-<div>{{form_label(form.halfDayRate)}}{{form_widget(form.halfDayRate, {attr: { value : user.intervenant.halfDayRate } })}}</div>
-<div>{{form_label(form.codeExam)}}{{form_widget(form.codeExam, {attr: { value : user.intervenant.codeExam } })}}</div>
-<div>{{form_label(form.perStudent)}}{{form_widget(form.perStudent, {attr: { value : user.intervenant.perStudent } })}}</div>
-{{form_row(form.Envoyer)}}
-{{ form_end(form) }}
+    {{form_start(form)}}
+    {{form_row(form.gender)}} 
+    {{form_row(form.name)}}
+    {{form_row(form.firstname)}}
+    {{form_row(form.address)}}
+    {{form_row(form.email)}}
+    {{form_row(form.phone)}}
+
+
+    <div> {{form_label(form.dailyRate)}}{{form_widget(form.dailyRate, {attr: {value : user.intervenant.dailyRate } })}}</div>
+    <div>{{form_label(form.halfDayRate)}}{{form_widget(form.halfDayRate, {attr: { value : user.intervenant.halfDayRate } })}}</div>
+    <div>{{form_label(form.codeExam)}}{{form_widget(form.codeExam, {attr: { value : user.intervenant.codeExam } })}}</div>
+    <div>{{form_label(form.perStudent)}}{{form_widget(form.perStudent, {attr: { value : user.intervenant.perStudent } })}}</div>
+    {{form_row(form.Envoyer)}}
+    {{ form_end(form) }}

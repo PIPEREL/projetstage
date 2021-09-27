@@ -30,6 +30,7 @@ class AdminController extends AbstractController
 
         $events = $eventRepository->calendarExFo(); // recupere les event qui ne sont pas des indisponibilités
         $rdvs=[];
+
         foreach($events as $event){ // gère l'apparence et les données passés au javascript
                 $numberOfStudent = count($event->getStudentEvents()); 
 
@@ -43,6 +44,7 @@ class AdminController extends AbstractController
 
             if($event->getIntervenant() !== null){
                 $description = $event->getIntervenant()->getUser()->getName()." | ".$numberOfStudent."/".$event->getMaxcandidate()." candidats";
+
                 $background = "#006400"; // $event->gettypeevent->getbagroundcolor();
 
             }

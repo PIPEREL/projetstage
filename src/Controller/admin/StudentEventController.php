@@ -17,6 +17,7 @@ class StudentEventController extends AbstractController
 
     #[Route('/{id}', name: 'student_event_delete', methods: ['POST'])]
     public function delete(Request $request, StudentEvent $studentEvent, StudentRepository $studentRepository): Response
+
     { // gère le retrait d'évenement.
 
         if ($this->isCsrfTokenValid('delete'.$studentEvent->getId(), $request->request->get('_token'))) {

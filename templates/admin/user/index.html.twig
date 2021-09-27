@@ -3,15 +3,61 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
+    <a href='{{path('admin_intervenant_register')}}' class='btn btn-primary w-100'>Nouvel intervenant</a>
+    <div class="ExamFormaContainer">
+        <div class='tabExam'>
+            <h2> liste des examinateurs </h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Code examinateur </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
 
-<div class="example-wrapper">
-    <div> liste des examinateurs </div>
-    {%  for examinateur in examinateurs  %}
-    <div> nom : {{examinateur.user.name}} - code examinateur : {{examinateur.codeExam}} <a href="{{ path('admin_user_show', {'id': examinateur.id})}}"> <button>voir plus</button> </a> </div>
-    {% endfor %}
-    <div> liste des formateurs </div>
-    {%  for formateur in formateurs %}
-    <div> nom : {{formateur.user.name}}  <a href="{{ path('admin_user_show', {'id': formateur.id})}}"> <button>voir plus</button> </a> </div>
-    {% endfor %}
-</div>
+                <tbody>
+                    {%  for examinateur in examinateurs  %}
+                        <tr>
+                            <td>{{examinateur.user.name}}</td>
+                            <td>{{examinateur.codeExam}}</td>
+                            <td>
+                                <a class='btn btn-primary' href="{{ path('admin_user_show', {'id': examinateur.id})}}">Show</a>
+                                <a class='btn btn-primary' href="{{ path('admin_intervenant_edit', {'id': examinateur.id})}}">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class='tabFormateur'>
+            <h2> liste des formateurs </h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for formateur in formateurs %}
+                        <tr>
+                            <td>{{formateur.user.name}}</td>
+                            <td>
+                                <a class='btn btn-primary' href="{{ path('admin_user_show', {'id': formateur.id})}}">Show</a>
+                                <a class='btn btn-primary' href="{{ path('admin_intervenant_edit', {'id': formateur.id})}}">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
 {% endblock %}
