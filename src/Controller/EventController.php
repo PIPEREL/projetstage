@@ -21,7 +21,7 @@ class EventController extends AbstractController
 {
     #[Route('/unavailability', name: 'user_unavailability', methods: ['GET','POST'])]
     public function new(Request $request, TypeEventRepository $typeEventRepository): Response
-    {
+    {//ajouter une indisponibiilité pour un utilisateur
         $event = new Event();
         $form = $this->createForm(UnavailabilityFormType::class, $event);
         $form->handleRequest($request);
@@ -53,7 +53,7 @@ class EventController extends AbstractController
     
     #[Route('/{id}', name: 'user_event_show', methods: ['GET', 'POST'])]
     public function show(Event $event, StudentEventRepository $studentEventRepository, StudentRepository $studentRepository, Request $request): Response
-    {
+    {// affiche l'event coté utilisateur (la page n'affiche l'event qu'au professeur assigné a ce dernier, sinon il retourne vers la page user.)
         if($event->getIntervenant() != $this->getUser()->getIntervenant())
         {
             return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
@@ -65,7 +65,7 @@ class EventController extends AbstractController
          $student = $studentRepository->findOneBy(['id'=>$repo->getStudent()]);
          $repo->setNote(true);
          $student->setAssigned(false);
-         if($request->request->get('validation') == 1){
+         if($request->request->get('validation') == 1){ //permet de gérer le changement d'état /!\ codé en brut
             if($student->getstatus() == "formation"){
                 $student->setStatus('examens');
             }else{

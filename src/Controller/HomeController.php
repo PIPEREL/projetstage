@@ -12,7 +12,7 @@ class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
     public function index(IntervenantRepository $intervenantRepository): Response
-    {
+    {//page d'acceuil du site
         // if ($this->getUser() == null) {
         //     return $this->redirectToRoute('app_login');
         // }

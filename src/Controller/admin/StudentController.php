@@ -21,14 +21,14 @@ class StudentController extends AbstractController
 {
     #[Route('/', name: 'student_index', methods: ['GET','POST'])]
     public function index(StudentRepository $studentRepository, Request $request): Response
-    {
+    { //page d'affichage et de gestion des étudiant 
         $students = $studentRepository->findBy(['blackListed'=>false]);
 
         $form = $this->createForm(StudentFilterType::class);
         $filter = $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $students = $studentRepository->filterstudent($filter->get('mots')->getdata(), $filter->get('blackListed')->getdata(), $filter->get('status')->getData(), $filter->get('assigned')->getData());
+            $students = $studentRepository->filterstudent($filter->get('mots')->getdata(), $filter->get('blackListed')->getdata(), $filter->get('status')->getData(), $filter->get('assigned')->getData()); //gère le filtre d'affichage des étudiants
         }
         return $this->render('admin/student/index.html.twig', [
             'students' => $students,
@@ -38,7 +38,7 @@ class StudentController extends AbstractController
 
     #[Route('/new', name: 'student_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
-    {
+    {//page de création d'un nouvel étudiant
         $student = new Student();
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
@@ -68,7 +68,7 @@ class StudentController extends AbstractController
 
     #[Route('/{id}', name: 'student_show', methods: ['GET', 'POST'])]
     public function show(Student $student, StudentEventRepository $studentEventRepository, Request $request): Response
-    {
+    { // page de détail d'un étudiant, on peut également attribuer un event à un étudiant depuis cette page.
         $studentevent = new StudentEvent;
         $studentevent->setStudent($student);
         $form = $this->createForm(StudentEventType::class, $studentevent);
@@ -101,11 +101,11 @@ class StudentController extends AbstractController
 
     #[Route('/{id}/edit', name: 'student_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Student $student): Response
-    {
+    {// page d'édition d'un étudiant 
         $form = $this->createForm(StudentEditType::class, $student);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) { 
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('student_index', [], Response::HTTP_SEE_OTHER);
@@ -119,7 +119,7 @@ class StudentController extends AbstractController
 
     #[Route('/{id}', name: 'student_delete', methods: ['POST'])]
     public function delete(Request $request, Student $student): Response
-    {
+    {// faites comme si j'existait pas. (page non recommandée à l'utilisation)
         if ($this->isCsrfTokenValid('delete'.$student->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($student);

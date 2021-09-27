@@ -17,12 +17,12 @@ class StudentEventController extends AbstractController
 
     #[Route('/{id}', name: 'student_event_delete', methods: ['POST'])]
     public function delete(Request $request, StudentEvent $studentEvent, StudentRepository $studentRepository): Response
-    {
+    { // gère le retrait d'évenement.
         if ($this->isCsrfTokenValid('delete'.$studentEvent->getId(), $request->request->get('_token'))) {
 
             $entityManager = $this->getDoctrine()->getManager();
             $student = $studentRepository->findOneBy(['id'=>$studentEvent->getStudent()]);
-            if($request->request->get('assigned') == true){   
+            if($request->request->get('assigned') == true){    // si la case 'retirer l'assignation' est cochée, on retire l'assignation 
                 $student->setAssigned(false);
                 $entityManager->persist($student);
             }

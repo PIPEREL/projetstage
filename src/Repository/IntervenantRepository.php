@@ -72,12 +72,13 @@ class IntervenantRepository extends ServiceEntityRepository
         ->orderby("u.name")
         ->setparameter(':end', $end)
         ->setparameter(':start', $start);
-        // ->getQuery()
-        // ->getResult();
+     
         if($type == "examens"){
             $query->andwhere('a.code_exam != :code')
             ->setParameter('code', 'null');
         }
+        // ->getQuery()
+        // ->getResult();
 
         return $query;
 
