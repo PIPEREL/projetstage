@@ -22,7 +22,7 @@ class UserController extends AbstractController
 {
     #[Route('admin/user', name: 'user_admin')]
     public function index(IntervenantRepository $intervenantRepository): Response
-    {
+    {// page d'affichage des professeurs/examinateurs 
         $examinateurs = $intervenantRepository->findExaminer();
         $formateurs = $intervenantRepository->findall();
 
@@ -34,7 +34,7 @@ class UserController extends AbstractController
 
     #[Route('admin/user/register', name: 'admin_intervenant_register')]
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder,  MailerInterface $mailer): Response
-    {
+    {//ajout d'un professeur (on génère un compte utilisateur en même temps)
         $user = new User();
         $intervenant = new Intervenant();
         $form = $this->createForm(IntervenantType::class, $user);
@@ -43,7 +43,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
         
 
-            // encode the plain password
+            // génère un mot de passe
             $unique= md5(uniqid());
             $shuffled= substr(str_shuffle($unique),0,4);
             $plainpassword =str_shuffle(ucfirst($form->get('name')->getdata()).ucfirst($form->get('firstname')->getdata())).$shuffled;
@@ -62,7 +62,7 @@ class UserController extends AbstractController
                 }
             $user->setIntervenant($intervenant);
             
-            if($form->get('sendEmail')->getData() == true){
+            if($form->get('sendEmail')->getData() == true){ // envoi un mail
             $email = (new TemplatedEmail())
             ->from(new Address('bastienpiperel@gmail.com', 'NoReplyPhiliance')) //addresse a remplacer par celle de philiance
             ->to($user->getEmail())
@@ -87,7 +87,7 @@ class UserController extends AbstractController
 
     #[Route('admin/user/edit/{id}', name: 'admin_intervenant_edit', methods: ['GET', 'POST'])]
     public function editIntervenant(Request $request, User $user, IntervenantRepository $intervenantRepository ,UserPasswordEncoderInterface $passwordEncoder): Response
-    {
+    {//page d'édition des intervenants
        
         $intervenant = $intervenantRepository->findOneBy(['user' => $user]);
         $form = $this->createForm(IntervenantType::class, $user);
@@ -116,7 +116,7 @@ class UserController extends AbstractController
 
     #[Route('admin/user/show/{id}', name: 'admin_user_show', methods: ['GET', 'POST'])]
     public function usershow(Intervenant $intervenant, EventRepository $eventRepository)
-    {
+    {//page d'affichage du calendrier de l'utilisateur selectionné
         $protocol ="http";
         if(isset($_SERVER['HTTPS'])){
             $protocol ="https";

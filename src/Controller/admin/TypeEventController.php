@@ -15,7 +15,7 @@ class TypeEventController extends AbstractController
 {
     #[Route('/', name: 'type_event_index', methods: ['GET'])]
     public function index(TypeEventRepository $typeEventRepository): Response
-    {
+    {//page de gestion des types d'évenements
         return $this->render('admin/type_event/index.html.twig', [
             'type_events' => $typeEventRepository->findAll(),
         ]);
@@ -23,7 +23,7 @@ class TypeEventController extends AbstractController
 
     #[Route('/new', name: 'type_event_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
-    {
+    { //page d'ajout de type d'event
         $typeEvent = new TypeEvent();
         $form = $this->createForm(TypeEventType::class, $typeEvent);
         $form->handleRequest($request);
@@ -44,7 +44,7 @@ class TypeEventController extends AbstractController
 
     #[Route('/{id}/edit', name: 'type_event_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, TypeEvent $typeEvent): Response
-    {
+    { //page d'édition d'un type d'event
         $form = $this->createForm(TypeEventType::class, $typeEvent);
         $form->handleRequest($request);
 
@@ -62,7 +62,7 @@ class TypeEventController extends AbstractController
 
     #[Route('/{id}', name: 'type_event_delete', methods: ['POST'])]
     public function delete(Request $request, TypeEvent $typeEvent): Response
-    {
+    { // page de suppression d'un type d'event (non recommandé)
         if ($this->isCsrfTokenValid('delete'.$typeEvent->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($typeEvent);
