@@ -31,6 +31,7 @@ class StudentController extends AbstractController
             $students = $studentRepository->filterstudent($filter->get('mots')->getdata(), $filter->get('blackListed')->getdata(), $filter->get('status')->getData(), $filter->get('assigned')->getData()); //gère le filtre d'affichage des étudiants
         }
         return $this->render('admin/student/index.html.twig', [
+
             'students' => $students,
             'form' => $form->createView()
         ]);
@@ -61,6 +62,7 @@ class StudentController extends AbstractController
         }
 
         return $this->renderForm('admin/student/new.html.twig', [
+
             'student' => $student,
             'form' => $form,
         ]);
@@ -92,7 +94,9 @@ class StudentController extends AbstractController
             
         }
 
+
         return $this->render('admin/student/show.html.twig', [
+
             'student' => $student,
             'form' => $form->createView(),
             'stevents' => $student->getStudentEvents()
@@ -111,7 +115,9 @@ class StudentController extends AbstractController
             return $this->redirectToRoute('student_index', [], Response::HTTP_SEE_OTHER);
         }
 
+
         return $this->renderForm('admin/student/edit.html.twig', [
+
             'student' => $student,
             'form' => $form,
         ]);
