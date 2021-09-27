@@ -16,7 +16,7 @@ class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'admin')]
     public function index(EventRepository $eventRepository): Response
-    {
+    {//affiche le calendrier général coté administrateurs
         $protocol ="http";
         if(isset($_SERVER['HTTPS'])){
             $protocol ="https";
@@ -25,14 +25,15 @@ class AdminController extends AbstractController
 
         $baseurl = $_SERVER['REDIRECT_BASE'];
 
-        // $url= $protocol.'://' .$serverName. $baseurl.'/admin/event/setintervenant/';
-        $url= $protocol.'://' .$serverName. $baseurl.'/admin/event/';
+        $url= $protocol.'://' .$serverName. $baseurl.'/admin/event/'; // crée une url de redirection pour le javascript
 
 
-        $events = $eventRepository->calendarExFo();
+        $events = $eventRepository->calendarExFo(); // recupere les event qui ne sont pas des indisponibilités
         $rdvs=[];
-        foreach($events as $event){
-                $numberOfStudent = count($event->getStudentEvents());
+
+        foreach($events as $event){ // gère l'apparence et les données passés au javascript
+                $numberOfStudent = count($event->getStudentEvents()); 
+
                 $textcolor = $event->getTypeEvent()->getTextColor();
                 $background = "#B22222";
                 $border =  $event->getTypeEvent()->getBorderColor();
@@ -43,7 +44,9 @@ class AdminController extends AbstractController
 
             if($event->getIntervenant() !== null){
                 $description = $event->getIntervenant()->getUser()->getName()." | ".$numberOfStudent."/".$event->getMaxcandidate()." candidats";
-                $background = "#006400";
+
+                $background = "#006400"; // $event->gettypeevent->getbagroundcolor();
+
             }
             $rdvs[] = [
                 'id' => $event->getId(),
@@ -59,7 +62,7 @@ class AdminController extends AbstractController
             ];
         }
 
-        $data = json_encode($rdvs);
+        $data = json_encode($rdvs); // transforme le tableau en json pour réaliser le passage
 
 
         return $this->render('admin/index.html.twig', [

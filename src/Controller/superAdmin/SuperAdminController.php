@@ -17,7 +17,10 @@ class SuperAdminController extends AbstractController
 {
     #[Route('/super/admin', name: 'super_admin')]
     public function index(UserRepository $userRepository): Response
-    {
+
+
+    {// index des super admins
+
         $admin =$userRepository->findbyrole();
         return $this->render('super_admin/index.html.twig', [
             'users'=> $admin,
@@ -27,7 +30,10 @@ class SuperAdminController extends AbstractController
     
     #[Route('super/admin/register', name: 'admin_register')]
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
-    {
+
+
+    { // création d'administrateur et super administrateurs 
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $contact = $form->handleRequest($request);
